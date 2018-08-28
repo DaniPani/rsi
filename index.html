@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RSI LA1 Streaming</title>
+</head>
+
+<body>
+    <style>
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <video autoplay controls></video>
+    <script>
+        const URILIVERSILA1 = 'https://teleboy.customers.cdn.iptv.ch/2/3045/index.m3u8?p=127&token=5471e185ef914ad814cd489f515e2da6&expires=1535566834&c=t1'
+        const video = document.querySelector('video')
+        if (Hls.isSupported()) {
+            const hls = new Hls({})
+            hls.loadSource(URILIVERSILA1)
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => video.play())
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = URILIVERSILA1
+            video.addEventListener('loadedmetadata', () => video.play())
+        }
+    </script>
+</body>
+
+</html>
